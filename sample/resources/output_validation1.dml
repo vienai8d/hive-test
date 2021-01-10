@@ -1,0 +1,3 @@
+INSERT OVERWRITE TABLE ${database}.output_validation1
+SELECT SUM(IF(add < 0, 1, 0)) = 0 AS valid
+FROM ${database}.output

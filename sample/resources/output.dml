@@ -1,0 +1,8 @@
+INSERT OVERWRITE TABLE ${database}.output
+SELECT
+  t1.id AS id,
+  v1 + v2 AS add,
+  v1 * v2 AS mul
+FROM
+  ${database}.input1 t1 JOIN ${database}.input2 t2
+  ON t1.id = t2.id

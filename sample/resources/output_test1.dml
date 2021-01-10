@@ -1,0 +1,7 @@
+WITH t1 AS (
+  SELECT COUNT(*) AS lines FROM ${database_actual}.output
+), t2 AS (
+  SELECT COUNT(*) AS lines FROM ${database_expected}.output
+)
+INSERT OVERWRITE TABLE ${database_actual}.output_test1
+SELECT t1.lines = t2.lines AS valid FROM t1, t2
