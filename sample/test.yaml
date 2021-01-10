@@ -1,16 +1,18 @@
 name: sample
 setup:
 - SET hivevar:thresh=0
+ddl_template: '{workdir}/resources/{name}.ddl'
 ddl:
-- resources/input1.ddl
-- resources/input2.ddl
-- resources/output.ddl
-- resources/output_test1.ddl
-- resources/output_validation1.ddl
+- input1
+- input2
+- output
+- output_test1
+- output_validation1
+dml_template: '{workdir}/resources/{name}.dml'
 dml:
-- resources/output.dml
-- resources/output_test1.dml
-- resources/output_validation1.dml
+- output
+- output_test1
+- output_validation1
 testdata:
 - name: common1
   actual:

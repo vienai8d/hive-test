@@ -31,8 +31,10 @@ def core(conf_path, workdir):
 
     # create tables.
     q += ['-- create tables']
-    for p in conf.ddl:
-        path = f'{workdir}/{p}'
+    ddl_template = conf.get('ddl_template', '{workdir}/{name}')
+    for name in conf.ddl:
+        print(ddl_template)
+        path = ddl_template.format(workdir=workdir, name=name)
         ddl = open(path).read()
         q += [
             f'SET hivevar:database={db_actual}',
@@ -75,8 +77,9 @@ def core(conf_path, workdir):
 
     # execute dml.
     q += ['-- execute dml']
+    dml_template = conf.get('dml_template', '{workdir}/{name}')
     for p in conf.dml:
-        path = f'{workdir}/{p}'
+        path = dml_template.format(workdir=workdir, name=name)
         dml = open(path).read()
         q += [
             f'SET hivevar:database={db_actual}',
