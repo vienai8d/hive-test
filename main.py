@@ -41,6 +41,10 @@ def core(conf_path, workdir):
             ddl,
         ]
 
+    # execute setup queries.
+    q += ['-- execute setup queries']
+    q += conf.setup
+
     # insert testdata into the tables.
     a = {}
     e = {}
@@ -92,7 +96,7 @@ def core(conf_path, workdir):
             f'grep true {path}',
             'if [ $? -ne 0 ]; then exit 1; fi',
         ]
-    
+
     return test_name, q, s
 
 def main():

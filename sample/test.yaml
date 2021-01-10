@@ -1,4 +1,6 @@
 name: sample
+setup:
+- SET hivevar:thresh=0
 ddl:
 - resources/input1.ddl
 - resources/input2.ddl
@@ -22,6 +24,10 @@ testdata:
     input2: 2, 3
   expected:
     output: 2, 5, 6
+- name: common3
+  actual:
+    input1: 3, -1
+    input2: 3, 8
 validation:
 - output_test1
 - output_validation1
