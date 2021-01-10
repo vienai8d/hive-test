@@ -9,6 +9,7 @@ def qstr(queries: list) -> str:
 def core(conf_path, workdir):
 
     q = []
+    s = []
 
     db_sel = 'database'
     tbl_sel = 'table'
@@ -87,20 +88,38 @@ def core(conf_path, workdir):
         q += [
             f'!grep true {path}',
         ]
-
-    print(qstr(q))
+        s += [
+            f'grep true {path}',
+            'if [ $? -ne 0 ]; then exit 1; fi',
+        ]
+    
+    return test_name, q, s
 
 def main():
     parser = ArgumentParser()
     parser.add_argument('conf_path')
     parser.add_argument('--workdir', '-w')
+    parser.add_argument('--outdir', '-o')
     args = parser.parse_args()
 
     kwargs = dict(
         conf_path=args.conf_path,
         workdir=args.workdir if args.workdir else os.path.dirname(args.conf_path),
     )
-    core(**kwargs)
+
+    test_name, q, s = core(**kwargs)
+
+    if args.outdir:
+        q_path = f'{args.outdir}/{test_name}.q'
+        sh_path = f'{args.outdir}/{test_name}.sh'
+        f = open(q_path, 'w')
+        f.write(qstr(q))
+        f.close()
+        f = open(sh_path, 'w')
+        f.write('\n'.join(s))
+        f.close()
+    else:
+        print(qstr(q))
 
 if __name__ == '__main__':
     main()
