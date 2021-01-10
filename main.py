@@ -1,15 +1,15 @@
+from argparse import ArgumentParser
+import os
 import yaml
 from attrdict import AttrDict
 
 def qstr(queries: list) -> str:
     return '\n'.join(map(lambda x: f'{x};', queries))
 
-def main():
+def core(conf_path, workdir):
 
     q = []
 
-    conf_path = 'sample/test.yaml'
-    workdir = 'sample/resources'
     db_sel = 'database'
     tbl_sel = 'table'
 
@@ -89,6 +89,18 @@ def main():
         ]
 
     print(qstr(q))
+
+def main():
+    parser = ArgumentParser()
+    parser.add_argument('conf_path')
+    parser.add_argument('--workdir', '-w')
+    args = parser.parse_args()
+
+    kwargs = dict(
+        conf_path=args.conf_path,
+        workdir=args.workdir if args.workdir else os.path.dirname(args.conf_path),
+    )
+    core(**kwargs)
 
 if __name__ == '__main__':
     main()

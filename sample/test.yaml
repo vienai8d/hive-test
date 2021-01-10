@@ -1,14 +1,14 @@
 name: sample
 ddl:
-- input1.ddl
-- input2.ddl
-- output.ddl
-- output_test1.ddl
-- output_validation1.ddl
+- resources/input1.ddl
+- resources/input2.ddl
+- resources/output.ddl
+- resources/output_test1.ddl
+- resources/output_validation1.ddl
 dml:
-- output.dml
-- output_test1.dml
-- output_validation1.dml
+- resources/output.dml
+- resources/output_test1.dml
+- resources/output_validation1.dml
 testdata:
 - name: common1
   actual:
